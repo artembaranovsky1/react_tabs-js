@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Tabs = ({ tabs, activeTab, isActiveTab }) => {
+export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
   return (
     <div data-cy="TabsComponent">
       <div className="tabs is-boxed">
@@ -9,12 +9,16 @@ export const Tabs = ({ tabs, activeTab, isActiveTab }) => {
             <li
               data-cy="Tab"
               key={tab.id}
-              className={activeTab === tab.id ? 'is-active' : ''}
+              className={activeTabId === tab.id ? 'is-active' : ''}
             >
               <a
                 href={`#${tab.id}`}
                 data-cy="TabLink"
-                onClick={() => isActiveTab(tab.id)}
+                onClick={() => {
+                  if (activeTabId !== tab.id) {
+                    onTabSelected(tab.id);
+                  }
+                }}
               >
                 {tab.title}
               </a>
@@ -42,7 +46,7 @@ export const Tabs = ({ tabs, activeTab, isActiveTab }) => {
       </div>
 
       <div className="block" data-cy="TabContent">
-        {tabs.find(tab => tab.id === activeTab).content}
+        {(tabs.find(tab => tab.id === activeTabId) || tabs[0])?.content}
       </div>
     </div>
   );

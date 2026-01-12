@@ -15,12 +15,14 @@ export const App = () => {
 
   return (
     <div className="section">
-      <h1 className="title">Selected tab is {tabs.find(tab => tab.id === activeTab).title}</h1>
+      <h1 className="title">
+        Selected tab is {(tabs.find(tab => tab.id === activeTab) || tabs[0])?.title}
+      </h1>
 
       <Tabs
         tabs={tabs}
-        activeTab={activeTab}
-        isActiveTab={id => setActiveTab(id)}
+        activeTabId={activeTab}
+        onTabSelected={id => setActiveTab(id)}
       />
     </div>
   );

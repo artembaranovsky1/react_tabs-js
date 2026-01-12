@@ -1,6 +1,10 @@
 import React from 'react';
 
 export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
+  const validTabId = tabs.map(tab => tab.id).includes(activeTabId)
+    ? activeTabId
+    : tabs[0].id;
+
   return (
     <div data-cy="TabsComponent">
       <div className="tabs is-boxed">
@@ -9,13 +13,13 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
             <li
               data-cy="Tab"
               key={tab.id}
-              className={activeTabId === tab.id ? 'is-active' : ''}
+              className={validTabId === tab.id ? 'is-active' : ''}
             >
               <a
                 href={`#${tab.id}`}
                 data-cy="TabLink"
                 onClick={() => {
-                  if (activeTabId !== tab.id) {
+                  if (validTabId !== tab.id) {
                     onTabSelected(tab.id);
                   }
                 }}
@@ -24,24 +28,6 @@ export const Tabs = ({ tabs, activeTabId, onTabSelected }) => {
               </a>
             </li>
           ))}
-
-          {/* <li className="is-active" data-cy="Tab"> */}
-          {/*  <a href="#tab-1" data-cy="TabLink"> */}
-          {/*    Tab 1 */}
-          {/*  </a> */}
-          {/* </li> */}
-
-          {/* <li data-cy="Tab"> */}
-          {/*  <a href="#tab-2" data-cy="TabLink"> */}
-          {/*    Tab 2 */}
-          {/*  </a> */}
-          {/* </li> */}
-
-          {/* <li data-cy="Tab"> */}
-          {/*  <a href="#tab-3" data-cy="TabLink"> */}
-          {/*    Tab 3 */}
-          {/*  </a> */}
-          {/* </li> */}
         </ul>
       </div>
 
